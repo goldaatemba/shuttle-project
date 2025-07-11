@@ -8,12 +8,12 @@ const Header = () => {
         {/* Logo and Title */}
         <div className="flex items-center space-x-4 mb-4 sm:mb-0">
           <img
-            src="/images/Zuru Shuttles.png"
-            alt="Zuru Shuttles Logo"
+            src="/images/logo.png"
+            alt=" Logo"
             className="w-35 h-35 object-contain rounded-full border-2 border-yellow-400"
           />
           <h1 className="text-xl md:text-2xl font-bold text-yellow-400">
-            Zuru Shuttles
+            Prestige Shuttles
           </h1>
         </div>
 

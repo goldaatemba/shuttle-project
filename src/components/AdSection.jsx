@@ -12,7 +12,7 @@ function AdSection() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="text-3xl md:text-5xl font-bold text-yellow-400"
         >
-          Prestige Shuttles — Seamless Intercity Travel Across Kenya
+          Prestige Shuttles — The Best or Nothing, Travel Across Kenya
         </motion.h1>
 
         <motion.p

@@ -4,7 +4,7 @@ function RouteDisplay() {
   const [routes, setRoutes] = useState([]);
 
   useEffect(() => {
-    fetch("https://zuru-shuttles-api.onrender.com/routes")
+    fetch("https://shuttle-project.onrender.com/routes")
       .then((res) => res.json())
       .then((data) => setRoutes(data))
       .catch((error) => console.error("Failed to fetch routes", error));
@@ -21,7 +21,7 @@ function RouteDisplay() {
             key={route.id}
             className="bg-gray-700 p-4 rounded-md hover:bg-gray-600 transition"
           >
-            {route.from} ➤ {route.to} - Departure Time⌚ {route.departureTime}
+            {route.from} ➤ {route.to} - Departure Time⌚ {route.departure_time}
           </li>
         ))}
       </ul>

@@ -1,80 +1,73 @@
 import { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 
-
 function BookingSummary() {
   const [bookings, setBookings] = useState([]);
-  const printRef = useRef();// this will create a reference to the printRef div
-  // this will be used to get the contents of the printRef div
+  const printRef = useRef();
 
   useEffect(() => {
-    fetch("https://zuru-shuttles-api.onrender.com/bookings")
+    fetch("https://shuttle-project.onrender.com/bookings")
       .then((res) => res.json())
       .then((data) => setBookings(data))
       .catch((error) => console.error("Failed to fetch bookings", error));
   }, []);
-const handleDelete = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Yes, delete it!",
-    cancelButtonText: "Cancel",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      fetch(`https://zuru-shuttles-api.onrender.com/bookings/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => {
-          if (res.ok) {
-            setBookings((prev) => prev.filter((booking) => booking.id !== id));
-            Swal.fire({
-              icon: "success",
-              title: "Deleted!",
-              text: "The booking has been successfully deleted.",
-              confirmButtonColor: "#3085d6",
-              timer: 10000,
-              showConfirmButton: false,
-            });
-          } else {
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://shuttle-project.onrender.com/bookings/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => {
+            if (res.ok) {
+              setBookings((prev) =>
+                prev.filter((booking) => booking.id !== id)
+              );
+              Swal.fire({
+                icon: "success",
+                title: "Deleted!",
+                text: "The booking has been successfully deleted.",
+                confirmButtonColor: "#3085d6",
+                timer: 2000,
+                showConfirmButton: false,
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Failed to delete the booking!",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error deleting booking:", error);
             Swal.fire({
               icon: "error",
-              title: "Oops...",
-              text: "Failed to delete the booking!",
+              title: "Error!",
+              text: "Something went wrong while deleting.",
             });
-          }
-        })
-        .catch((error) => {
-          console.error("Error deleting booking:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Error!",
-            text: "Something went wrong while deleting.",
           });
-        });
-    } else {
-      // Optional: user clicked cancel
-      console.log("Deletion cancelled");
-    }
-  });
-};
+      }
+    });
+  };
 
   const handlePrint = () => {
-    const printContents = printRef.current.innerHTML;// this will get the contents of the printRef
-    // Save the original contents of the body
-    const originalContents = document.body.innerHTML;// this will get the original contents of the body
+    const printContents = printRef.current.innerHTML;
+    const originalContents = document.body.innerHTML;
 
-    document.body.innerHTML = printContents;//this will replace the entire body with the contents of the printRef
-    window.print();// this will open the print dialog
-    // After printing, restore the original contents
-    // and reload the page to return to the app
-    // This is important to ensure that the app returns to its original state
-    // and doesn't stay in the print view
-    document.body.innerHTML = originalContents;// this will replace the body with the original contents
-    window.location.reload(); // reload to return to app after printing
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload();
   };
 
   return (
@@ -148,4 +141,3 @@ const handleDelete = (id) => {
 }
 
 export default BookingSummary;
-

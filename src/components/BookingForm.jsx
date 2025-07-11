@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 function BookingForm() {
   const [name, setName] = useState("");
-  const [number,setNumber] = useState("");
+  const [number, setNumber] = useState("");
   const [route, setRoute] = useState("");
   const [date, setDate] = useState("");
   const [departureTime, setDepartureTime] = useState("");
@@ -13,22 +13,24 @@ function BookingForm() {
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
 
+  // Fetch routes and vehicles from your live API
   useEffect(() => {
-    fetch("https://zuru-shuttles-api.onrender.com/routes")
+    fetch("https://shuttle-project.onrender.com/routes")
       .then((res) => res.json())
       .then((data) => setRoutes(data))
       .catch((error) => console.error("Failed to fetch routes", error));
 
-    fetch("https://zuru-shuttles-api.onrender.com/vehicles")
+    fetch("https://shuttle-project.onrender.com/vehicles")
       .then((res) => res.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Failed to fetch vehicles", error));
   }, []);
 
+  // Update price and departure time when a route is selected
   useEffect(() => {
     const selected = routes.find((r) => r.id.toString() === route);
     if (selected) {
-      setDepartureTime(selected.departure_time);
+      setDepartureTime(selected.departureTime);
       setPrice(selected.price);
     } else {
       setDepartureTime("");
@@ -39,23 +41,24 @@ function BookingForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !route || !date || !vehicle) {
-     toast.error("Please fill in all fields.");
+    if (!name || !number || !route || !date || !vehicle) {
+      toast.error("Please fill in all fields.");
       return;
     }
 
     const selectedRoute = routes.find((r) => r.id.toString() === route);
+
     const newBooking = {
       name,
       number,
-      route: `${selectedRoute.from}-${selectedRoute.to}`,
+      route: `${selectedRoute.from} - ${selectedRoute.to}`,
       vehicle,
       departureDate: date,
       departureTime: selectedRoute.departureTime,
       price: selectedRoute.price,
     };
 
-    fetch("https://zuru-shuttles-api.onrender.com/bookings", {
+    fetch("https://shuttle-project.onrender.com/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,7 +88,7 @@ function BookingForm() {
     <form
       onSubmit={handleSubmit}
       id="book"
-      className="min-h-screen flex flex-col bg-gradient-to-r from-black to-gray-900 text-white p-6 rounded-xl shadow-lg border "
+      className="min-h-screen flex flex-col bg-gradient-to-r from-black to-gray-900 text-white p-6 rounded-xl shadow-lg border"
     >
       <h2 className="text-2xl font-bold text-yellow-400 text-center mb-4">
         Book a Seat
@@ -117,7 +120,7 @@ function BookingForm() {
         <option value="">Select Route</option>
         {routes.map((r) => (
           <option key={r.id} value={r.id}>
-            {r.from} - {r.to} - {r.price} :{r.departureTime}
+            {r.from} - {r.to} - KES {r.price} : {r.departureTime}
           </option>
         ))}
       </select>
@@ -143,14 +146,14 @@ function BookingForm() {
       />
 
       {departureTime && (
-        <p className="text-yellow-300">
+        <p className="text-yellow-300 mb-2">
           Departure Time: <strong>{departureTime}</strong>
         </p>
       )}
 
       {price && (
-        <p className="text-yellow-300">
-          Price: <strong>{price}</strong>
+        <p className="text-yellow-300 mb-4">
+          Price: <strong>KES {price}</strong>
         </p>
       )}
 

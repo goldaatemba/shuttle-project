@@ -19,9 +19,9 @@ function Footer() {
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Contact Info */}
         <div className="text-center">
-          <p className="text-lg font-semibold text-yellow-400">Zuru Shuttles</p>
-          <p>📞 +254 712 345 678</p>
-          <p>📧 support@zurushuttles.co.ke</p>
+          <p className="text-lg font-semibold text-yellow-400">Prestige Shuttles</p>
+          <p>📞 +254 742 470 324</p>
+          <p>📧 support@prestigeshuttles.co.ke</p>
         </div>
 
         {/* Feedback Form */}
@@ -46,7 +46,7 @@ function Footer() {
 
         {/* Copyright */}
         <p className="text-center text-sm text-gray-400 mt-4">
-          &copy; {new Date().getFullYear()} Zuru Shuttles. All rights reserved.
+          &copy; {new Date().getFullYear()} Prestige Shuttles. All rights reserved.
         </p>
       </div>
     </footer>
